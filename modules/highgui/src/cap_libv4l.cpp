@@ -259,8 +259,8 @@ make & enjoy!
 
 
 // default and maximum number of V4L buffers, not including last, 'special' buffer
-#define MAX_V4L_BUFFERS 10
-#define DEFAULT_V4L_BUFFERS 4
+#define MAX_V4L_BUFFERS 3
+#define DEFAULT_V4L_BUFFERS 1
 
 // if enabled, copies data from the buffer. this uses a bit more memory,
 //  but much more reliable for some UVC cameras
@@ -800,7 +800,7 @@ static int _capture_V4L2 (CvCaptureCAM_V4L *capture, char *deviceName)
        buf.index = n_buffers;
 
        if (-1 == xioctl (capture->deviceHandle, VIDIOC_QUERYBUF, &buf)) {
-           perror ("VIDIOC_QUERYBUF");
+           // perror ("VIDIOC_QUERYBUF");
 
            /* free capture, and returns an error code */
            icvCloseCAM_V4L (capture);
@@ -1075,7 +1075,7 @@ static int read_frame_v4l2(CvCaptureCAM_V4L* capture) {
 
         default:
             /* display the error and stop processing */
-            perror ("VIDIOC_DQBUF");
+            // perror ("VIDIOC_DQBUF");
             return 1;
         }
    }
@@ -1093,8 +1093,8 @@ static int read_frame_v4l2(CvCaptureCAM_V4L* capture) {
    capture->bufferIndex = buf.index;
 #endif
 
-   if (-1 == xioctl (capture->deviceHandle, VIDIOC_QBUF, &buf))
-       perror ("VIDIOC_QBUF");
+   if (-1 == xioctl (capture->deviceHandle, VIDIOC_QBUF, &buf));
+       // perror ("VIDIOC_QBUF");
 
    return 1;
 }
